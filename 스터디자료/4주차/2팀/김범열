@@ -1,0 +1,77 @@
+# 4주차 과제
+## 김범열
+### 노래만들기
+#### 회로 링크
+https://www.tinkercad.com/things/eEfm03O61Ov
+#### 코드
+#define FF 220// 3옥라
+#define C 262 //도
+#define D 294 //레
+#define E 330 //미
+#define F 349 //파
+#define G 392 //솔
+#define A 440 //라
+#define B 494 //시
+
+int piezoPin = 10;
+int tempo = 400;
+int notes[16] = {C,E, C, FF, E, F, C, B, B, A, A, F, A, B, CC, B};
+
+void setup()
+{
+  pinMode(piezoPin, OUTPUT);
+}
+
+void loop()
+{
+  for(int i = 0; i< 12; i++) {
+    tone(piezoPin, notes[i], tempo);
+  	delay(300);
+  }
+  delay(1000);
+  for (int i = 12; i < 25; i++) {
+    tone(piezoPin, notes[i], tempo);
+    delay(300);
+	}
+}
+
+### 후방 감지 센서
+#### 회로 링크
+https://www.tinkercad.com/things/5JVtF91Ji7X
+#### 코드
+int echo = 3;
+int trigger = 2;
+int buzzer = 10;
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(echo, INPUT);
+  pinMode(trigger, OUTPUT);
+}
+void loop()
+{
+  digitalWrite(trigger, HIGH);
+  delay(2);
+  digitalWrite(trigger, LOW);
+  
+  float duration = pulseIn(echo, HIGH);
+  float distance = duration *0.034 / 2;
+  
+  if (distance >= 100|| distance <= 0) {
+    tone(buzzer, 100, 10);
+    Serial.println("장애물이 없습니다.");
+  }
+  else if (distance <= 60 && distance >= 51) {
+  	tone(buzzer, 500, 50);
+    Serial.println("60cm내에 장애물이 있습니다.");
+  }
+  else if (distance <= 50 && distance >= 41) {
+  	tone(buzzer, 1000, 100);
+    Serial.println("50cm내에 장애물이 있습니다.");
+  }
+}
+### 느낀점
+#### 노래 만들기
+내가 원하는 노래를 만들어서 좋았고, 나중에는 더 길고 복잡한 노래를 만들어 보고 싶다고 생각하였다.
+#### 후방 감지 센서
+실생활에서 유용하게 쓰는 기술을 만들어서 신기하였다.
